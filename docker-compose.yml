@@ -1,0 +1,24 @@
+version: '2'
+services:
+  saf.mysql:
+    image: mysql/mysql-server:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      USER: root
+      PASSWORD: 1234
+    restart: always
+
+  saf.larval:
+    build: ../saf
+    ports:
+      - "3000:8181"
+    links:
+      - saf.mysql
+    volumes:
+      - ../saf:/app
+    restart: always
+
+volumes:
+  saf-mysql:
+    external: true
